@@ -1,0 +1,56 @@
+<html>
+
+<head></head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+        </script>
+    <script type="text/javascript">
+
+
+        function apiCall() {
+            var api_url = "https://kb21b9g2yj.execute-api.us-east-1.amazonaws.com/prod/pwned?pswd="
+            var call = api_url + document.getElementById('pswd').value
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("result").innerHTML = this.responseText;
+                    setEmoji(this.responseText)
+                }
+            };
+            xhttp.open("GET", call, true);
+            xhttp.send();
+            console.log(result.innerText);
+        }
+
+        function setEmoji(data){
+            var json_data=JSON.parse(data);
+            var breached=json_data.is_breached
+            if(breached==true){
+                //alert("BAD")
+                document.getElementById("emotion").innerHTML ="😭";
+                document.getElementById("emotion").innerHTML ='<iframe src="https://giphy.com/embed/uWPGqy4rkgllS" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pokemon-no-smh-uWPGqy4rkgllS"></a></p>'
+            }else{
+                document.getElementById("emotion").innerHTML ="🤩";
+                document.getElementById("emotion").innerHTML ='<iframe src="https://giphy.com/embed/xuXzcHMkuwvf2" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/90s-the-girls-are-in-charge-xuXzcHMkuwvf2"></a></p>'
+            }
+        }
+
+
+    </script>
+    <!-- My content goes out here -->
+
+    <form>
+        <label for="pswd">Input Password</label>
+        <input id="pswd" type="text">
+        <button id="rektFinder" type="button" onclick="apiCall()">Rekt Finder</button>
+    </form>
+
+    <div id="result"></div>
+    <div id="emotion"></div>
+
+</body>
+
+
+</html>
